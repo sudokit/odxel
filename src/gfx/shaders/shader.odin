@@ -60,7 +60,7 @@ shader_compile :: proc(s: ^Shader, inc_dir: string) -> bool {
 	log.infof("Compiling shader %s (%v / %s)", s.path, s.stage, s.entry_point)
 
 	if err := os2.mkdir(".shader_out"); err != nil && err != .Exist do return false
-	cmd := "/usr/bin/slangc -matrix-layout-column-major -I%s %s -target spirv -entry %s -stage %s -o %s"
+	cmd := "/usr/bin/slangc -matrix-layout-column-major -g%s -I%s %s -target spirv -entry %s -stage %s -o %s"
 
 	stage := strings.to_lower(reflect.enum_string(s.stage))
 
@@ -69,6 +69,7 @@ shader_compile :: proc(s: ^Shader, inc_dir: string) -> bool {
 	fmt.bprintf(
 		buffer[:],
 		cmd,
+		ODIN_DEBUG ? "maximal" : "none",
 		len(inc_dir) == 0 ? filepath.dir(s.path) : inc_dir,
 		s.path,
 		s.entry_point,

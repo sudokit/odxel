@@ -5,6 +5,7 @@ import "core:time"
 
 Debug_Stats :: struct {
 	avg_fps, avg_dt: f32,
+	dt, fps:         f32,
 }
 
 ds_update :: proc "contextless" (start: time.Tick, $F: i32) -> Debug_Stats {
@@ -27,6 +28,11 @@ ds_update :: proc "contextless" (start: time.Tick, $F: i32) -> Debug_Stats {
 		fps += s.fps
 	}
 
-	return {avg_fps = fps / f32(len(fps_history)), avg_dt = cdt / f32(len(dt_history))}
+	return {
+		avg_fps = fps / f32(len(fps_history)),
+		avg_dt = cdt / f32(len(dt_history)),
+		dt = cast(f32)dt,
+		fps = 1 / cast(f32)dt,
+	}
 }
 

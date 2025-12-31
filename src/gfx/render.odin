@@ -24,6 +24,14 @@ renderer_create :: proc(win: ^sdl.Window) -> (r: Renderer = {}, ok: bool) {
 	r.win = win
 	// device
 	r.gpu = sdl.CreateGPUDevice({.SPIRV}, ODIN_DEBUG, nil)
+	// props := sdl.CreateProperties()
+	// sdl.SetStringProperty(props, "SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING", "vulkan")
+	// sdl.SetBooleanProperty(props, "SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN", ODIN_DEBUG)
+	// sdl.SetBooleanProperty(props, "SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN", false)
+	// sdl.SetBooleanProperty(props, "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN", true)
+	// sd: sdl.GPUVulkanOptions
+	// sdl.SetPointerProperty(props, "SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER")
+	// r.gpu = sdl.SDL_CreateGPUDeviceWithProperties()
 	if r.gpu == nil {
 		log.fatal("Failed to create a gpu device")
 		return {}, false
